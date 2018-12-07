@@ -4,6 +4,7 @@ TEXTDOMAIN=virtualhost
 
 ### Set default parameters
 domain=$1
+appsPath='/home/blogs/'
 sitesEnable='/etc/nginx/sites-enabled/'
 
 if ! echo "server {
@@ -16,7 +17,7 @@ if ! echo "server {
     passenger_enabled on;
     passenger_ruby /usr/local/rvm/gems/ruby-2.5.3/wrappers/ruby;
 }
-" > $sitesEnable$domain
+" > $appsPath$domain
 		then
 			echo -e $"There is an ERROR create $domain file"
 			exit;
@@ -24,4 +25,5 @@ if ! echo "server {
 			echo -e $"\nNew Virtual Host Created\n"
 fi
 
+ln -nfs $appsPath$domain $sitesEnable$domain
 service nginx restart
